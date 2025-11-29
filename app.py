@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, emit
 from deep_translator import GoogleTranslator
 import os
+import eventlet
 from pyngrok import ngrok
 
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode="threading")
+eventlet.monkey_patch()
 
 users = {}  
 user_languages = {} 
@@ -78,6 +80,6 @@ def handle_disconnect():
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
-
     socketio.run(app, host='0.0.0.0', port=port)
+
 
