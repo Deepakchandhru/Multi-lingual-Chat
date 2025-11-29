@@ -5,7 +5,7 @@ import os
 from pyngrok import ngrok
 
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode="threading")
 
 users = {}  
 user_languages = {} 
@@ -80,4 +80,5 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 3000))
     public_url = ngrok.connect(port)
     print("Ngrok Tunnel URL:", public_url)
+
     socketio.run(app, host='0.0.0.0', port=port)
